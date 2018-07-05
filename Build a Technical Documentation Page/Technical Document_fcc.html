@@ -1,0 +1,302 @@
+<link rel="stylesheet" type="text/css" href="style.css">
+<nav id="navbar">
+  <header>Python OOPs Tutorial</header>
+  <ul> 
+    <a class="nav-link" href="#Classes" rel="internal"><li>Classes</li></a>
+    <a class="nav-link" href="#A_Word_About_Names_and_Objects" rel="internal"><li>A Word About Names and Objects</li></a>
+    <a class="nav-link" href="#Python_Scopes_and_Namespaces" rel="internal"><li>Python Scopes and Namespaces</li></a>
+    <a class="nav-link" href="#HClass_Objects" rel="internal"><li>Class Objects</li></a>
+    <a class="nav-link" href="#Instance_Objects" rel="internal"><li>Instance Objects</li></a>
+    <a class="nav-link" href="#Method_Objects" rel="internal"><li>Method Objects</li></a>
+    <a class="nav-link" href="#Class_and_Instance_Variables" rel="internal"><li>Class and Instance Variables</li></a>
+    <a class="nav-link" href="#Inheritance" rel="internal"><li>Inheritance</li></a>
+    <a class="nav-link" href="#Multiple_Inheritance" rel="internal"><li>Multiple Inheritance</li></a>
+    <a class="nav-link" href="#Private_Variables" rel="internal"><li>Private Variables</li></a>
+    <a class="nav-link" href="#Iterators" rel="internal"><li>Iterators</li></a>
+    <a class="nav-link" href="#Generators" rel="internal"><li>Generators</li></a>
+    
+    <a class="nav-link" href="#Reference" rel="internal"><li>Reference</li></a>
+  </ul>
+</nav>
+<main id="main-doc">
+  <section class="main-section" id="Introduction">
+    <header>Classes</header>
+    <article>  
+      <p>Classes provide a means of bundling data and functionality together. Creating a new class creates a new type of object, allowing new instances of that type to be made. Each class instance can have attributes attached to it for maintaining its state. Class instances can also have methods (defined by its class) for modifying its state.</p>
+
+<p>Compared with other programming languages, Python’s class mechanism adds classes with a minimum of new syntax and semantics. It is a mixture of the class mechanisms found in C++ and Modula-3. Python classes provide all the standard features of Object Oriented Programming: the class inheritance mechanism allows multiple base classes, a derived class can override any methods of its base class or classes, and a method can call the method of a base class with the same name. Objects can contain arbitrary amounts and kinds of data. As is true for modules, classes partake of the dynamic nature of Python: they are created at runtime, and can be modified further after creation..</p>
+<li>In C++ terminology, normally class members (including the data members) are public (except see below Private Variables), and all member functions are virtual. As in Modula-3, there are no shorthands for referencing the object’s members from its methods: the method function is declared with an explicit first argument representing the object, which is provided implicitly by the call. As in Smalltalk, classes themselves are objects. This provides semantics for importing and renaming. Unlike C++ and Modula-3, built-in types can be used as base classes for extension by the user. Also, like in C++, most built-in operators with special syntax (arithmetic operators, subscripting etc.) can be redefined for class instances..</li>
+<li>(Lacking universally accepted terminology to talk about classes, I will make occasional use of Smalltalk and C++ terms. I would use Modula-3 terms, since its object-oriented semantics are closer to those of Python than C++, but I expect that few readers have heard of it.).</li>
+      </artice>
+    </section>
+  <section class="main-section" id="A_Word_About_Names_and_Objects">
+    <header>A Word About Names and Objects</header>
+    <article>
+      <p>Objects have individuality, and multiple names (in multiple scopes) can be bound to the same object. This is known as aliasing in other languages. This is usually not appreciated on a first glance at Python, and can be safely ignored when dealing with immutable basic types (numbers, strings, tuples). However, aliasing has a possibly surprising effect on the semantics of Python code involving mutable objects such as lists, dictionaries, and most other types. This is usually used to the benefit of the program, since aliases behave like pointers in some respects. For example, passing an object is cheap since only a pointer is passed by the implementation; and if a function modifies an object passed as an argument, the caller will see the change — this eliminates the need for two different argument passing mechanisms as in Pascal.</p>
+      </artice>
+    </section>
+  <section class="main-section" id="Python_Scopes_and_Namespaces">
+    <header>Python Scopes and Namespaces</header>
+    <article>
+    <p>Before introducing classes, I first have to tell you something about Python’s scope rules. Class definitions play some neat tricks with namespaces, and you need to know how scopes and namespaces work to fully understand what’s going on. Incidentally, knowledge about this subject is useful for any advanced Python programmer..</p>
+
+<p>A namespace is a mapping from names to objects. Most namespaces are currently implemented as Python dictionaries, but that’s normally not noticeable in any way (except for performance), and it may change in the future. Examples of namespaces are: the set of built-in names (containing functions such as abs(), and built-in exception names); the global names in a module; and the local names in a function invocation. In a sense the set of attributes of an object also form a namespace. The important thing to know about namespaces is that there is absolutely no relation between names in different namespaces; for instance, two different modules may both define a function maximize without confusion — users of the modules must prefix it with the module name..</p>
+<p>By the way, I use the word attribute for any name following a dot — for example, in the expression z.real, real is an attribute of the object z. Strictly speaking, references to names in modules are attribute references: in the expression modname.funcname, modname is a module object and funcname is an attribute of it. In this case there happens to be a straightforward mapping between the module’s attributes and the global names defined in the module: they share the same namespace!.</p>
+<ul>
+  <li>the innermost scope, which is searched first, contains the local names</li>
+  <li>the scopes of any enclosing functions, which are searched starting with the nearest enclosing scope, contains non-local, but also non-global names</li>
+  <li>the next-to-last scope contains the current module’s global names</li>
+  <li>the outermost scope (searched last) is the namespace containing built-in names</li>
+</ul>
+    </article>
+    </section>
+  <section class="main-section" id="Class_Objects">
+    <header>Class Objects</header>
+    <article> 
+Class objects support two kinds of operations: attribute references and instantiation.
+
+Attribute references use the standard syntax used for all attribute references in Python: obj.name. Valid attribute names are all the names that were in the class’s namespace when the class object was created. So, if the class definition looked like this: Python code:
+<code>class MyClass:
+    """A simple example class"""
+    i = 12345
+
+    def f(self):
+        return 'hello world'
+</code>
+
+    </article>
+    </section>
+  <section class="main-section" id="Instance_Objects">
+    <header>Instance Objects</header>
+    <p>
+Now what can we do with instance objects? The only operations understood by instance objects are attribute references. There are two kinds of valid attribute names, data attributes and methods..
+    </p>
+    <p>
+data attributes correspond to “instance variables” in Smalltalk, and to “data members” in C++. Data attributes need not be declared; like local variables, they spring into existence when they are first assigned to. For example, if x is the instance of MyClass created above, the following piece of code will print the value 16, without leaving a trace:.
+    </p>
+    <p>
+Valid method names of an instance object depend on its class. By definition, all attributes of a class that are function objects define corresponding methods of its instances. So in our example, x.f is a valid method reference, since MyClass.f is a function, but x.i is not, since MyClass.i is not. But x.f is not the same thing as MyClass.f — it is a method object, not a function object..
+    </p>
+   
+    </section>
+  <section class="main-section" id="Method_Objects">
+    <header>Method Objects</header>
+    <article>
+Usually, a method is called right after it is bound::
+      <p>
+      <code>x.f()</code> In the MyClass example, this will return the string 'hello world'. However, it is not necessary to call a method right away: x.f is a method object, and can be stored away and called at a later time. For example:.
+      </p>
+      <p>
+       For example, <code>xf = x.f
+while True:
+    print(xf())</code> will continue to print hello world until the end of time..
+      </p>
+    </article>
+    </section>
+  <section class="main-section" id="Class_and_Instance_Variables">
+    <header>Class and Instance Variables</header>
+    <article>
+     <p> Generally speaking, instance variables are for data unique to each instance and class variables are for attributes and methods shared by all instances of the class:.</p>
+
+<p>JavaScript before ECMAScript 2015 does not have block statement scope; rather, a variable declared within a block is local to the function (or global scope) that the block resides within. For example the following code will log 5, because the scope of x is the function (or global context) within which x is declared, not the block, which in this case is an if statement.</p>
+<code>class Dog:
+
+    kind = 'canine'         # class variable shared by all instances
+
+    def __init__(self, name):
+        self.name = name    # instance variable unique to each instance
+
+>>> d = Dog('Fido')
+>>> e = Dog('Buddy')
+>>> d.kind                  # shared by all dogs
+'canine'
+>>> e.kind                  # shared by all dogs
+'canine'
+>>> d.name                  # unique to d
+'Fido'
+>>> e.name                  # unique to e
+'Buddy'</code>
+      <p>As discussed in A Word About Names and Objects, shared data can have possibly surprising effects with involving mutable objects such as lists and dictionaries. For example, the tricks list in the following code should not be used as a class variable because just a single list would be shared by all Dog instances:.</p>
+
+<code>class Dog:
+
+    tricks = []             # mistaken use of a class variable
+
+    def __init__(self, name):
+        self.name = name
+
+    def add_trick(self, trick):
+        self.tricks.append(trick)
+
+>>> d = Dog('Fido')
+>>> e = Dog('Buddy')
+>>> d.add_trick('roll over')
+>>> e.add_trick('play dead')
+>>> d.tricks                # unexpectedly shared by all dogs
+['roll over', 'play dead']</code>
+<p>Correct design of the class should use an instance variable instead:<code>class Dog:
+
+    def __init__(self, name):
+        self.name = name
+        self.tricks = []    # creates a new empty list for each dog
+
+    def add_trick(self, trick):
+        self.tricks.append(trick)
+
+>>> d = Dog('Fido')
+>>> e = Dog('Buddy')
+>>> d.add_trick('roll over')
+>>> e.add_trick('play dead')
+>>> d.tricks
+['roll over']
+>>> e.tricks
+['play dead']</code></p>
+    </article>
+    </section>
+  <section class="main-section" id="Inheritance">
+    <header>Inheritance</header>
+    <article>
+<p>Of course, a language feature would not be worthy of the name “class” without supporting inheritance. The syntax for a derived class definition looks like this:<code>class DerivedClassName(BaseClassName):
+    <statement-1>
+    .
+    .
+    .
+    statement-N></code>.</p>
+
+<p>The name BaseClassName must be defined in a scope containing the derived class definition. In place of a base class name, other arbitrary expressions are also allowed. This can be useful, for example, when the base class is defined in another module:.</p>
+    </article>
+    </section>
+  <section class="main-section" id="Multiple_Inheritance">
+    <header>Multiple Inheritance</header>
+    <article>
+<p>Python supports a form of multiple inheritance as well. A class definition with multiple base classes looks like this:.</p>
+
+      <code>class DerivedClassName(Base1, Base2, Base3):
+    <statement-1>
+    .
+    .
+    .
+    <statement-N>;</code>
+<p>For most purposes, in the simplest cases, you can think of the search for attributes inherited from a parent class as depth-first, left-to-right, not searching twice in the same class where there is an overlap in the hierarchy. Thus, if an attribute is not found in DerivedClassName, it is searched for in Base1, then (recursively) in the base classes of Base1, and if it was not found there, it was searched for in Base2, and so on..</p>
+
+    </article>
+    </section>
+  <section class="main-section" id="Private_Variables">
+    <header>Private Variables</header>
+    <article>
+      <p>“Private” instance variables that cannot be accessed except from inside an object don’t exist in Python. However, there is a convention that is followed by most Python code: a name prefixed with an underscore (e.g. _spam) should be treated as a non-public part of the API (whether it is a function, a method or a data member). It should be considered an implementation detail and subject to change without notice.</p>
+      <code>
+        class Mapping:
+    def __init__(self, iterable):
+        self.items_list = []
+        self.__update(iterable)
+
+    def update(self, iterable):
+        for item in iterable:
+            self.items_list.append(item)
+
+    __update = update   # private copy of original update() method
+
+class MappingSubclass(Mapping):
+
+    def update(self, keys, values):
+        # provides new signature for update()
+        # but does not break __init__()
+        for item in zip(keys, values):
+            self.items_list.append(item)</code>
+    </article>
+    </section>
+  <section class="main-section" id="Iterators">
+    <header>Iterators</header>
+    <article>
+By now you have probably noticed that most container objects can be looped over using a for statement::
+
+<code>for element in [1, 2, 3]:
+    print(element)
+for element in (1, 2, 3):
+    print(element)
+for key in {'one':1, 'two':2}:
+    print(key)
+for char in "123":
+    print(char)
+for line in open("myfile.txt"):
+    print(line, end='')</code>
+This style of access is clear, concise, and convenient. The use of iterators pervades and unifies Python. Behind the scenes, the for statement calls iter() on the container object. The function returns an iterator object that defines the method __next__() which accesses elements in the container one at a time. When there are no more elements, __next__() raises a StopIteration exception which tells the for loop to terminate. You can call the __next__() method using the next() built-in function; this example shows how it all works.
+<p>
+You may also compound the statements using else if to have multiple conditions tested in sequence, as follows:
+      </p>
+<code>>>> s = 'abc'
+>>> it = iter(s)
+>>> it
+<iterator object at 0x00A1DB50>
+>>> next(it)
+'a'
+>>> next(it)
+'b'
+>>> next(it)
+'c'
+>>> next(it)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+    next(it)
+StopIteration</code>
+Having seen the mechanics behind the iterator protocol, it is easy to add iterator behavior to your classes. Define an __iter__() method which returns an object with a __next__() method. If the class defines __next__(), then __iter__() can just return self::
+
+<code>class Reverse:
+    """Iterator for looping over a sequence backwards."""
+    def __init__(self, data):
+        self.data = data
+        self.index = len(data)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index == 0:
+            raise StopIteration
+        self.index = self.index - 1
+        return self.data[self.index]</code>
+It is advisable to not use simple assignments in a conditional expression, because the assignment can be confused with equality when glancing over the code. For example, do not use the following code:
+<code>>>> rev = Reverse('spam')
+>>> iter(rev)
+<__main__.Reverse object at 0x00A1DB50>
+>>> for char in rev:
+...     print(char)
+...
+m
+a
+p
+s</code>
+
+    </article>
+    </section>
+  <section class="main-section" id="Generators">
+    <header>Generators</header>
+    <article>
+Generators are a simple and powerful tool for creating iterators. They are written like regular functions but use the yield statement whenever they want to return data. Each time next() is called on it, the generator resumes where it left off (it remembers all the data values and which statement was last executed). An example shows that generators can be trivially easy to create::
+
+<code>def reverse(data):
+    for index in range(len(data)-1, -1, -1):
+        yield data[index]</code>.
+
+<p>Anything that can be done with generators can also be done with class-based iterators as described in the previous section. What makes generators so compact is that the __iter__() and __next__() methods are created automatically..</p>
+
+      
+<code>>>> for char in reverse('golf'):
+...     print(char)
+...
+f
+l
+o
+g</code>
+<p>Another key feature is that the local variables and execution state are automatically saved between calls. This made the function easier to write and much more clear than an approach using instance variables like self.index and self.data.</p>
+
+</article>
+    </section>
+  <section class="main-section" id="Reference">
+    <header>Reference</header>
+    <article>
+      <li>All the documentation in this page is taken from <a href="https://docs.python.org/3/tutorial/classes.html" target="_blank">Python Tutorial</a>
+    </article>
+    </section>
+</main>

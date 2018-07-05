@@ -1,0 +1,23 @@
+body{
+  background-color: #f3e5f5
+}
+
+#navbar ,#main-navbar{
+  background-color: #ce93d8;
+  margin-top:0;
+  position:sticky
+}
+
+@media only screen and (max-width: 367px) {
+  /*    #contact{
+    min-height:1100px;
+  } */
+  .contact-details {
+    border: 4px solid #90C695;
+    border-radius: 0;
+    width: 70px;
+    height: 18px;
+    padding: 8px;
+    line-height: normal;
+  }
+}

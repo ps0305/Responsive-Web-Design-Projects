@@ -1,0 +1,41 @@
+body {
+  background-color: #0ddebf;
+  font-family: 'Lato', sans-serif;
+}
+#how-it-works {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  
+  iframe {
+    max-width: 560px;
+    width: 100%;
+  }
+}
+
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    
+    #tenor, #bass, #valve { max-width: 300px; width: 100%; margin: 0 auto; margin-bottom: 10px; }
+  }
+
+.desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 125px;
+    width: 80vw;
+    padding: 5px;
+
+    @media (max-width: 550px) {
+      width: 100%;
+      text-align: center;
+      padding: 0;
+      height: 150px;
+    }
+  }
+  
+  @media (max-width: 650px) {
+    margin-top: 0;
+  }
