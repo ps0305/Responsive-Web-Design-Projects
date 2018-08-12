@@ -17,12 +17,14 @@ Give #box-1 a value of `10em` and #box-2 a value of `20em`.
   #box-1 {
     background-color: dodgerblue;
     height: 200px;
+    flex-basis: 10em;
     
   }
   
   #box-2 {
     background-color: orangered;
     height: 200px;
+    flex-basis: 20em;
     
   }
 </style>
