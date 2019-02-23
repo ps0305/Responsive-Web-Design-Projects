@@ -5,6 +5,7 @@ As shown in the example below, you can push the item downwards then upwards by s
 but having it set to 0px for the first (0%) and the last (100%) `keyframe`.
 
 ```html
+<style>
 @keyframes rainbow {
   0% {
     background-color: blue;
@@ -19,6 +20,7 @@ but having it set to 0px for the first (0%) and the last (100%) `keyframe`.
     top: 0px;
   }
 }
+</style>
 ```
 Add a horizontal motion to the div animation. Using the left offset property, 
 add to the @keyframes rule so rainbow starts at `0 pixels at 0%`, moves to `25 pixels at 50%`, and ends at `-25 pixels at 100%`. 
