@@ -4,7 +4,7 @@ This tells CSS to align the children horizontally.
 
 Add the CSS property flex-direction to both the header and footer and set the value to row.
 
-```js
+```HTML
 <style>
   body {
     font-family: Arial, sans-serif;
