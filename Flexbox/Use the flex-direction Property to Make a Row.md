@@ -11,7 +11,7 @@ Other options for flex-direction are row-reverse and column-reverse.
 
 Add the CSS property `flex-direction` to the `#box-container element`, and give it a value of `row-reverse`.
 
-```js
+```HTML
 <style>
   #box-container {
     display: flex;
